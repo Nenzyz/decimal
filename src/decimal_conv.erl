@@ -20,7 +20,7 @@ from_binary(Bin) ->
 -spec to_binary(decimal:decimal(), Opts) -> binary() when
       Opts :: binary_opts().
 to_binary({Int, 0}, _Opts) ->
-    <<(integer_to_binary(Int))/binary, ".0">>;
+    <<(integer_to_binary(Int))/binary>>;
 to_binary({Int, E}, #{pretty := Pretty}) ->
     Sign =
         case Int < 0 of
@@ -41,7 +41,7 @@ to_binary({Int, E}, #{pretty := Pretty}) ->
                     <<Sign/binary, B/binary, $., R/binary>>
             end;
         AE when E >= 0 andalso ((not Pretty) orelse (AE < 6)) ->
-            <<Sign/binary, Bin/binary,(binary:copy(<<$0>>, E))/binary, ".0">>;
+            <<Sign/binary, Bin/binary,(binary:copy(<<$0>>, E))/binary>>;
         AE when Size =:= 1->
             <<Sign/binary, Bin/binary, ".0", (e(AE))/binary>>;
         AE ->
